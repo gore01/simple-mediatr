@@ -4,7 +4,7 @@ namespace simple_mediatr;
 
 public class Benchmarks
 {
-    private Mediatr _mediatr;
+    private Mediatr _mediatr = null!;
     private readonly Ping _request = new Ping { Message = "Hello World" };
     [GlobalSetup]
     public void GlobalSetup()
@@ -24,5 +24,5 @@ public class Benchmarks
 
 public class Ping
 {
-    public string Message { get; set; }
+    public required string Message { get; set; }
 }

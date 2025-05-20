@@ -20,18 +20,18 @@ public class MediatrTests
         var countdown = new CountdownEvent(2);
 
         // Act
-        var subscription1 = mediatr.Subscribe<string>(async msg =>
+        var subscription1 = mediatr.Subscribe<string>(msg =>
         {
             notifications.Add($"Handler1: {msg}");
             countdown.Signal();
-            await Task.CompletedTask;
+            return Task.CompletedTask;
         });
 
-        var subscription2 = mediatr.Subscribe<string>(async msg =>
+        var subscription2 = mediatr.Subscribe<string>(msg =>
         {
             notifications.Add($"Handler2: {msg}");
             countdown.Signal();
-            await Task.CompletedTask;
+            return Task.CompletedTask;
         });
 
         mediatr.Publish("Test Message");
@@ -57,7 +57,7 @@ public class MediatrTests
 
         // Act
         var subscription = mediatr.Subscribe<string>(
-            async msg => throw new Exception("Test error"),
+            msg => throw new Exception("Test error"),
             (msg, ex) =>
             {
                 errors.Add((msg, ex));
@@ -85,10 +85,10 @@ public class MediatrTests
         var notifications = new ConcurrentBag<string>();
 
         // Act
-        var subscription = mediatr.Subscribe<string>(async msg =>
+        var subscription = mediatr.Subscribe<string>(msg =>
         {
             notifications.Add(msg);
-            await Task.CompletedTask;
+            return Task.CompletedTask;
         });
 
         mediatr.Publish("Before cancellation");
@@ -110,18 +110,18 @@ public class MediatrTests
         var countdown = new CountdownEvent(2);
 
         // Act
-        var stringSubscription = mediatr.Subscribe<string>(async msg =>
+        var stringSubscription = mediatr.Subscribe<string>(msg =>
         {
             stringNotifications.Add(msg);
             countdown.Signal();
-            await Task.CompletedTask;
+            return Task.CompletedTask;
         });
 
-        var intSubscription = mediatr.Subscribe<int>(async msg =>
+        var intSubscription = mediatr.Subscribe<int>(msg =>
         {
             intNotifications.Add(msg);
             countdown.Signal();
-            await Task.CompletedTask;
+            return Task.CompletedTask;
         });
 
         mediatr.Publish("String message");
@@ -148,25 +148,25 @@ public class MediatrTests
         var countdown = new CountdownEvent(3);
 
         // Act
-        var subscription1 = mediatr.Subscribe<string>(async msg =>
+        var subscription1 = mediatr.Subscribe<string>(msg =>
         {
             notifications.Add($"Handler1: {msg}");
             countdown.Signal();
-            await Task.CompletedTask;
+            return Task.CompletedTask;
         });
 
-        var subscription2 = mediatr.Subscribe<string>(async msg =>
+        var subscription2 = mediatr.Subscribe<string>(msg =>
         {
             notifications.Add($"Handler2: {msg}");
             countdown.Signal();
-            await Task.CompletedTask;
+            return Task.CompletedTask;
         });
 
-        var subscription3 = mediatr.Subscribe<string>(async msg =>
+        var subscription3 = mediatr.Subscribe<string>(msg =>
         {
             notifications.Add($"Handler3: {msg}");
             countdown.Signal();
-            await Task.CompletedTask;
+            return Task.CompletedTask;
         });
 
         mediatr.Publish("Test Message");
@@ -193,17 +193,17 @@ public class MediatrTests
         var countdown = new CountdownEvent(1);
 
         // Act
-        var subscription1 = mediatr.Subscribe<string>(async msg =>
+        var subscription1 = mediatr.Subscribe<string>(msg =>
         {
             notifications.Add($"Handler1: {msg}");
             countdown.Signal();
-            await Task.CompletedTask;
+            return Task.CompletedTask;
         });
 
-        var subscription2 = mediatr.Subscribe<string>(async msg =>
+        var subscription2 = mediatr.Subscribe<string>(msg =>
         {
             notifications.Add($"Handler2: {msg}");
-            await Task.CompletedTask;
+            return Task.CompletedTask;
         });
 
         await subscription2.DisposeAsync();
@@ -227,11 +227,11 @@ public class MediatrTests
         var countdown = new CountdownEvent(3);
 
         // Act
-        var subscription = mediatr.Subscribe<string>(async msg =>
+        var subscription = mediatr.Subscribe<string>(msg =>
         {
             notifications.Add(msg);
             countdown.Signal();
-            await Task.CompletedTask;
+            return Task.CompletedTask;
         });
 
         mediatr.Publish("Message 1");
@@ -258,11 +258,11 @@ public class MediatrTests
         var countdown = new CountdownEvent(1);
 
         // Act
-        var subscription = mediatr.Subscribe<string?>(async msg =>
+        var subscription = mediatr.Subscribe<string?>(msg =>
         {
             notifications.Add(msg);
             countdown.Signal();
-            await Task.CompletedTask;
+            return Task.CompletedTask;
         });
 
         mediatr.Publish<string?>(null);
@@ -285,11 +285,11 @@ public class MediatrTests
         var countdown = new CountdownEvent(100);
 
         // Act
-        var subscription = mediatr.Subscribe<int>(async msg =>
+        var subscription = mediatr.Subscribe<int>(msg =>
         {
             notifications.Add(msg);
             countdown.Signal();
-            await Task.CompletedTask;
+            return Task.CompletedTask;
         });
 
         var tasks = Enumerable.Range(0, 100)
@@ -316,21 +316,21 @@ public class MediatrTests
         var countdown = new CountdownEvent(1);
 
         // Act
-        var subscription = mediatr.Subscribe<string>(async msg =>
+        var subscription = mediatr.Subscribe<string>(msg =>
         {
             notifications.Add(msg);
             countdown.Signal();
-            await Task.CompletedTask;
+            return Task.CompletedTask;
         });
 
         await subscription.DisposeAsync();
 
         // Subscribe again
-        var newSubscription = mediatr.Subscribe<string>(async msg =>
+        var newSubscription = mediatr.Subscribe<string>(msg =>
         {
             notifications.Add(msg);
             countdown.Signal();
-            await Task.CompletedTask;
+            return Task.CompletedTask;
         });
 
         mediatr.Publish("Test Message");
@@ -352,10 +352,10 @@ public class MediatrTests
         var notifications = new ConcurrentBag<string>();
 
         // Act
-        var subscription = mediatr.Subscribe<string>(async msg =>
+        var subscription = mediatr.Subscribe<string>(msg =>
         {
             notifications.Add(msg);
-            await Task.CompletedTask;
+            return Task.CompletedTask;
         });
 
         // Assert
@@ -371,16 +371,16 @@ public class MediatrTests
         var notifications = new ConcurrentBag<string>();
 
         // Act
-        var subscription1 = mediatr.Subscribe<string>(async msg =>
+        var subscription1 = mediatr.Subscribe<string>(msg =>
         {
             notifications.Add($"Handler1: {msg}");
-            await Task.CompletedTask;
+            return Task.CompletedTask;
         });
 
-        var subscription2 = mediatr.Subscribe<string>(async msg =>
+        var subscription2 = mediatr.Subscribe<string>(msg =>
         {
             notifications.Add($"Handler2: {msg}");
-            await Task.CompletedTask;
+            return Task.CompletedTask;
         });
 
         await subscription1.DisposeAsync();
@@ -393,7 +393,7 @@ public class MediatrTests
     }
 
     [Fact]
-    public async Task Subscribe_ShouldHandleSelfDisposal()
+    public void Subscribe_ShouldHandleSelfDisposal()
     {
         // Arrange
         var mediatr = new Mediatr();
@@ -402,15 +402,13 @@ public class MediatrTests
         IAsyncDisposable? subscription = null;
 
         // Act
-        subscription = mediatr.Subscribe<string>(async msg =>
+        subscription = mediatr.Subscribe<string>(msg =>
         {
             notifications.Add(msg);
             countdown.Signal();
             if (subscription != null)
-            {
-                await subscription.DisposeAsync();
-            }
-            await Task.CompletedTask;
+                return subscription.DisposeAsync().AsTask();
+            return Task.CompletedTask;
         });
 
         mediatr.Publish("First Message");
@@ -433,7 +431,7 @@ public class MediatrTests
 
         // Act
         var subscription = mediatr.Subscribe<string>(
-            async msg => throw new Exception("Test error"),
+            msg => throw new Exception("Test error"),
             (msg, ex) =>
             {
                 notifications.Add($"Error: {msg}");
@@ -463,7 +461,7 @@ public class MediatrTests
 
         // Act
         var subscription1 = mediatr.Subscribe<string>(
-            async msg => throw new Exception("Error 1"),
+            msg => throw new Exception("Error 1"),
             (msg, ex) =>
             {
                 errors.Add((msg, ex));
@@ -472,7 +470,7 @@ public class MediatrTests
         );
 
         var subscription2 = mediatr.Subscribe<string>(
-            async msg => throw new Exception("Error 2"),
+            msg => throw new Exception("Error 2"),
             (msg, ex) =>
             {
                 errors.Add((msg, ex));
@@ -500,7 +498,7 @@ public class MediatrTests
         var mediatr = new Mediatr();
         var notifications = new ConcurrentBag<int>();
         var subscriptions = Enumerable.Range(0, 10)
-            .Select(_ => mediatr.Subscribe<int>(async msg => { notifications.Add(msg); await Task.CompletedTask; }))
+            .Select(_ => mediatr.Subscribe<int>(msg => { notifications.Add(msg); return Task.CompletedTask; }))
             .ToArray();
 
         // Act
@@ -526,7 +524,7 @@ public class MediatrTests
 
         // Act
         var subscribeTasks = Enumerable.Range(0, 10)
-            .Select(_ => Task.Run(() => mediatr.Subscribe<int>(async msg => { notifications.Add(msg); countdown.Signal(); await Task.CompletedTask; })))
+            .Select(_ => Task.Run(() => mediatr.Subscribe<int>(msg => { notifications.Add(msg); countdown.Signal(); return Task.CompletedTask; })))
             .ToArray();
         var publishTasks = Enumerable.Range(0, 1000)
             .Select(i => Task.Run(() => mediatr.Publish(i)))
@@ -549,7 +547,7 @@ public class MediatrTests
         var notifications = new ConcurrentBag<int>();
         var countdown = new CountdownEvent(subscriberCount * messageCount);
         var subscriptions = Enumerable.Range(0, subscriberCount)
-            .Select(_ => mediatr.Subscribe<int>(async msg => { notifications.Add(msg); countdown.Signal(); await Task.CompletedTask; }))
+            .Select(_ => mediatr.Subscribe<int>(msg => { notifications.Add(msg); countdown.Signal(); return Task.CompletedTask; }))
             .ToArray();
 
         var sw = System.Diagnostics.Stopwatch.StartNew();
@@ -591,29 +589,29 @@ public class MediatrTests
 
         // Создаем подписчиков для каждого типа
         var intSubscriptions = Enumerable.Range(0, subscriberCount)
-            .Select(_ => mediatr.Subscribe<int>(async msg =>
+            .Select(_ => mediatr.Subscribe<int>(msg =>
             {
                 intNotifications.Add(msg);
                 intCountdown.Signal();
-                await Task.CompletedTask;
+                return Task.CompletedTask;
             }))
             .ToArray();
 
         var stringSubscriptions = Enumerable.Range(0, subscriberCount)
-            .Select(_ => mediatr.Subscribe<string>(async msg =>
+            .Select(_ => mediatr.Subscribe<string>(msg =>
             {
                 stringNotifications.Add(msg);
                 stringCountdown.Signal();
-                await Task.CompletedTask;
+                return Task.CompletedTask;
             }))
             .ToArray();
 
         var dateSubscriptions = Enumerable.Range(0, subscriberCount)
-            .Select(_ => mediatr.Subscribe<DateTime>(async msg =>
+            .Select(_ => mediatr.Subscribe<DateTime>(msg =>
             {
                 dateNotifications.Add(msg);
                 dateCountdown.Signal();
-                await Task.CompletedTask;
+                return Task.CompletedTask;
             }))
             .ToArray();
 
