@@ -2,7 +2,7 @@ using System.Collections.Concurrent;
 
 namespace simple_mediatr;
 
-public partial class Mediatr
+public partial class Mediatr : IPublisher, ISubscriber
 {
     private readonly ConcurrentDictionary<Type, object> _subscriptions = new();
 

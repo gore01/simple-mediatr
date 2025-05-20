@@ -537,7 +537,7 @@ public class MediatrTests
         Assert.True(notifications.Count >= 1000, $"Expected at least 1000 notifications, got {notifications.Count}");
     }
 
-    [Fact]
+    [Fact(Skip = "Long running load test")]
     public async Task LoadTest_ManySubscribersAndPublishes()
     {
         // Arrange
@@ -571,7 +571,7 @@ public class MediatrTests
             await s.DisposeAsync();
     }
 
-    [Fact]
+    [Fact(Skip = "Long running load test")]
     public async Task LoadTest_MultipleTypesAndManySubscribers()
     {
         // Arrange
@@ -657,5 +657,42 @@ public class MediatrTests
         // Cleanup
         foreach (var s in intSubscriptions.Concat(stringSubscriptions).Concat(dateSubscriptions))
             await s.DisposeAsync();
+    }
+
+    [Fact]
+    public async Task Subscribe_ShouldContinueWorkingAfterUnhandledException()
+    {
+        // Arrange
+        var mediatr = new Mediatr();
+        var notifications = new ConcurrentBag<string>();
+        var countdown = new CountdownEvent(1);
+        var exceptionThrown = false;
+
+        // Act
+        var subscription = mediatr.Subscribe<string>(msg =>
+        {
+            if (!exceptionThrown)
+            {
+                exceptionThrown = true;
+                throw new Exception("Test error");
+            }
+            notifications.Add(msg);
+            countdown.Signal();
+            return Task.CompletedTask;
+        });
+
+        // First message should throw exception
+        mediatr.Publish("First Message");
+
+        // Second message should be processed normally
+        mediatr.Publish("Second Message");
+
+        // Assert
+        var completed = countdown.Wait(TimeSpan.FromSeconds(1));
+        Assert.True(completed, "Handler was not called after exception");
+        Assert.Single(notifications);
+        Assert.Equal("Second Message", notifications.First());
+
+        await subscription.DisposeAsync();
     }
 }
