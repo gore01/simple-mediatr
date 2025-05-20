@@ -2,9 +2,22 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.5.002.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "simple-mediatr", "src/simple-mediatr/simple-mediatr.csproj", "{84F74D91-E74C-4893-85F3-F86120C4CEC2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "simple-mediatr", "src\simple-mediatr\simple-mediatr.csproj", "{84F74D91-E74C-4893-85F3-F86120C4CEC2}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "simple-mediatr.tests", "tests/simple-mdiatr.tests/simple-mediatr.tests.csproj", "{A1B2C3D4-E5F6-4789-ABCD-EF1234567890}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "simple-mediatr.tests", "tests\simple-mdiatr.tests\simple-mediatr.tests.csproj", "{A1B2C3D4-E5F6-4789-ABCD-EF1234567890}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{55A39A7E-FB7D-4BFB-8899-71EBCFE35790}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "simple-mediatr.benchmark", "tests\simple-mediatr.benchmark\simple-mediatr.benchmark.csproj", "{C70EB395-396D-4009-ACEA-C506E4136D99}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".files", ".files", "{315128D1-AE70-4F61-8EC8-58B2828FDE87}"
+	ProjectSection(SolutionItems) = preProject
+		Directory.Packages.props = Directory.Packages.props
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "samples", "samples", "{85AF70E6-08CE-4D9C-911B-DEE68BA8E28C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "simple-mediatr.background-service", "samples\simple-mediatr.background-service\simple-mediatr.background-service.csproj", "{DC7EF98C-8AE7-4D0B-9D34-57C6FCCFE217}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -20,11 +33,24 @@ Global
 		{A1B2C3D4-E5F6-4789-ABCD-EF1234567890}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A1B2C3D4-E5F6-4789-ABCD-EF1234567890}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A1B2C3D4-E5F6-4789-ABCD-EF1234567890}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C70EB395-396D-4009-ACEA-C506E4136D99}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C70EB395-396D-4009-ACEA-C506E4136D99}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C70EB395-396D-4009-ACEA-C506E4136D99}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C70EB395-396D-4009-ACEA-C506E4136D99}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DC7EF98C-8AE7-4D0B-9D34-57C6FCCFE217}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DC7EF98C-8AE7-4D0B-9D34-57C6FCCFE217}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DC7EF98C-8AE7-4D0B-9D34-57C6FCCFE217}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DC7EF98C-8AE7-4D0B-9D34-57C6FCCFE217}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{A1B2C3D4-E5F6-4789-ABCD-EF1234567890} = {55A39A7E-FB7D-4BFB-8899-71EBCFE35790}
+		{C70EB395-396D-4009-ACEA-C506E4136D99} = {55A39A7E-FB7D-4BFB-8899-71EBCFE35790}
+		{DC7EF98C-8AE7-4D0B-9D34-57C6FCCFE217} = {85AF70E6-08CE-4D9C-911B-DEE68BA8E28C}
+	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {710EE3B9-5041-41BA-9DEE-5647E1CC85A9}
 	EndGlobalSection
-EndGlobal 
+EndGlobal
