@@ -14,11 +14,11 @@ public partial class Mediatr
         }
     }
 
-    public IAsyncDisposable Subscribe<T>(Func<T, Task> handler, Action<T, Exception>? errorHandler = default, CancellationToken cancellationToken = default)
+    public IAsyncDisposable Subscribe<T>(Func<T, Task> handler, Action<T, Exception>? errorHandler = default)
     {
         var subscription =
             _subscriptions.AddOrUpdate(typeof(T), new Subscription<T>(), (_, v) => v);
 
-        return ((Subscription<T>)subscription).Subscribe(handler, errorHandler, cancellationToken);
+        return ((Subscription<T>)subscription).Subscribe(handler, errorHandler);
     }
 }

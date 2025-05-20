@@ -17,13 +17,13 @@ partial class Mediatr
             }
         }
 
-        public IAsyncDisposable Subscribe(Func<TPayload, Task> handler, Action<TPayload, Exception>? errorHandler = default, CancellationToken cancellationToken = default)
+        public IAsyncDisposable Subscribe(Func<TPayload, Task> handler, Action<TPayload, Exception>? errorHandler = default)
         {
             var channelId = Guid.NewGuid();
             var channel = Channel.CreateUnbounded<TPayload>();
             _channels.AddOrUpdate(channelId, channel, (_, _) => channel);
 
-            var cts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
+            var cts = new CancellationTokenSource();
             var tokenToUse = cts.Token;
             tokenToUse.Register(() => channel.Writer.Complete());
 
