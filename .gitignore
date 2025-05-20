@@ -144,3 +144,6 @@ $RECYCLE.BIN/
 # JetBrains Rider
 .idea/
 *.sln.iml 
+
+#BenchmarkDotNet
+BenchmarkDotNet*/
